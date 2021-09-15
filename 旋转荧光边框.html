@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #130F40;
+        }
+        #box {
+            height: 300px;
+            width: 200px;
+            position: relative;
+            background-color: #130F40;
+        }
+        .content {
+            color: white;
+            line-height: 300px;
+            text-align: center;
+            font-size: 18px;
+            font-family: '新宋体';
+        }
+        .flouresence {
+            position: absolute;
+            left: -2px;
+            top: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+        }
+        .flouresence-filter {
+            z-index: -1;
+        }
+        .flouresence-border {
+            z-index: -2;
+            filter: blur(20px);
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="content">鼠标移入该区域</div>
+        <!-- 第一个div用于设置边框 -->
+        <div class="flouresence flouresence-filter "></div>
+        <!-- 第二个div用于设置模糊 -->
+        <div class="flouresence flouresence-border "></div>
+    </div>
+    <script>
+        let box = document.getElementById("box");
+        let flouresence = box.children;
+        let interval = [];
+        box.addEventListener('mouseover', function(e){
+            
+            let angle = Math.floor(Math.random()*360);
+            for(let i=1; i<flouresence.length; i++) {
+                interval[i] = setInterval(() => {
+                    angle++;
+                    flouresence[i].style.background = "linear-gradient(" + angle + "deg,#89ff00,#060c21,#00bcd4)";
+                    if(angle == 405) {angle = 45}
+                }, 16.7);
+            }
+        })
+        box.addEventListener('mouseout', function(e){
+            for(let i=0; i<interval.length; i++) {
+                clearInterval(interval[i]);
+                flouresence[i].style.background = "";
+            }
+        })
+    </script>
+</body>
+</html>
